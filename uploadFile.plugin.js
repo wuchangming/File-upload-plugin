@@ -39,7 +39,7 @@
  */
 ;(function(){
 	
-	window.document.domain = 'woqu.com';
+	// window.document.domain = 'woqu.com';
 	
 	
 	/**
@@ -84,6 +84,13 @@
 			}
 		}
 	}
+	
+	/**
+	 * 窗口大小调整时调整位置
+	 */
+	$(window).resize(function(){
+		$.wqUpLoadFilePlugin.iePositionFix();
+	});
 	
 	/**
 	 * iframe回调方法
@@ -341,13 +348,16 @@
 	 * ie下重新调整位置
 	 */
 	function positionFix(obj){
-		var offSet = obj.selector.offset();
-		$('#' + obj.upLoadFormName).find('div').css({
-				"left":offSet.left,
-				"top":offSet.top,
-				"width":obj.selector.width(),
-				"height":obj.selector.height()
-			})
+		if(ieFlag){
+			var offSet = obj.selector.offset();
+			$('#' + obj.upLoadFormName).find('div').css({
+					"left":offSet.left,
+					"top":offSet.top,
+					"width":obj.selector.css('width'),
+					"height":obj.selector.css('height')
+				});
+		}
+			
 	}
 	
 	/**
